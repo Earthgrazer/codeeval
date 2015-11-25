@@ -1,1 +1,1 @@
-Solution for challenge #42, "Ugly Numbers".
+Solution for challenge #42, "Ugly Numbers" (https://www.codeeval.com/open_challenges/42/).
