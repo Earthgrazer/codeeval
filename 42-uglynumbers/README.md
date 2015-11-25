@@ -1,0 +1,1 @@
+Solution for challenge #42, "Ugly Numbers".
