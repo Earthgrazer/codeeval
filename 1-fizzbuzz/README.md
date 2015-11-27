@@ -1,0 +1,1 @@
+Solution for challenge #1, "Fizz Buzz" (https://www.codeeval.com/open_challenges/1/).
