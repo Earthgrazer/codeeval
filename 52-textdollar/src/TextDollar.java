@@ -7,10 +7,12 @@ public class TextDollar {
     private static final String TEENS[] = new String[]{
             "Eleven",
             "Twelve",
+            "Thirteen",
             "Fourteen",
             "Fifteen",
             "Sixteen",
             "Seventeen",
+            "Eighteen",
             "Nineteen"
     };
 
