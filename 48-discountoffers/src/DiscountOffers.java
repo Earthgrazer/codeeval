@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DiscountOffers {
     private static final boolean[] vowels = new boolean[]{true, false, false, false, true, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, true, false};
@@ -18,11 +20,61 @@ public class DiscountOffers {
             String[] products = parts[1].split(",");
 
             int[][] scores = calculateScores(customers, products);
-            System.out.println(scores);
+            List<Integer> custIndices = new ArrayList<>();
+            List<Integer> prodIndices = new ArrayList<>();
+
+            for (int cust = 0; cust < scores.length; cust++) {
+                custIndices.add(cust);
+            }
+
+            for (int prod = 0; prod < scores[0].length; prod++) {
+                prodIndices.add(prod);
+            }
+
+            StringBuffer strBuf = new StringBuffer(String.valueOf(getMaxScore(custIndices, prodIndices, scores)));
+
+            if (strBuf.length() == 1)
+                System.out.println("0.00");
+            else
+                System.out.println(strBuf.insert(strBuf.length() - 2, "."));
         }
 
         // required for CodeEval
         System.exit(0);
+    }
+
+    private static int getMaxScore(List<Integer> custIndices, List<Integer> prodIndices, int[][] scores) {
+        int highScore = 0;
+
+        if (custIndices.size() == 1) {
+            for (Integer prodIndex : prodIndices) {
+                int score = scores[custIndices.get(0)][prodIndex];
+
+                if (score > highScore)
+                    highScore = score;
+            }
+
+            return highScore;
+        }
+
+        for (Integer custIndex : custIndices) {
+            for (Integer prodIndex : prodIndices) {
+                List<Integer> remainingCustIndices = new ArrayList<>(custIndices);
+                List<Integer> remainingProdIndices = new ArrayList<>(prodIndices);
+
+                remainingCustIndices.remove(custIndex);
+                remainingProdIndices.remove(prodIndex);
+
+                int subHighScore = getMaxScore(remainingCustIndices, remainingProdIndices, scores);
+                int score = scores[custIndex][prodIndex];
+                int subTotal = subHighScore + score;
+
+                if (subTotal > highScore)
+                    highScore = subTotal;
+            }
+        }
+
+        return highScore;
     }
 
     private static int[][] calculateScores(String[] customers, String[] products)
@@ -45,7 +97,7 @@ public class DiscountOffers {
                     score *= 1.5;
 
                 // store 2 decimal point precision as integer
-                scores[custIndex][prodIndex] = (int) score * 100;
+                scores[custIndex][prodIndex] = (int) (score * 100.0);
             }
         }
 
