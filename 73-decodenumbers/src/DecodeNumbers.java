@@ -21,7 +21,7 @@ public class DecodeNumbers {
 
                 if (combinedValue >= 1 && combinedValue <= 26) {
                     if (i - 2 >= 0) {
-                        ways[i] = 2 * ways[i - 2];
+                        ways[i] = ways[i - 2] + ways[i - 1];
                     }
                     else {
                         ways[i] = 2;
